@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--    FILENAME      : recycler_view_project_listect_list.xml-->
+<!--    PROJECT       : PROG3150 - Assignment 1-->
+<!--    PROGRAMMER    : Aaron Perry, Daniel Grew, John Stanley, Manthan Rami, Sasha Malesevic-->
+<!--    FIRST VERSION : 2020-02-08-->
+<!--    DESCRIPTION   : This xml file contains the UI layout for the recyclerFriendView-->
+<!--                    RecyclerView.-->
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".MainActivity">
+
+  <TextView
+      android:id="@+id/num_of_members"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:padding="5dp"
+      app:layout_constraintBaseline_toBaselineOf="@+id/name"
+      app:layout_constraintEnd_toEndOf="parent"
+      tools:text="@string/num_members" />
+
+  <TextView
+      android:id="@+id/name"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:padding="5dp"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      tools:text="@string/project_name" />
+
+  <TextView
+      android:id="@+id/num_of_tasks"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:padding="5dp"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/name"
+      tools:text="@string/num_of_tasks" />
+
+  <TextView
+      android:id="@+id/done"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:padding="5dp"
+      android:text="TextView"
+      app:layout_constraintBaseline_toBaselineOf="@+id/num_of_tasks"
+      app:layout_constraintEnd_toEndOf="parent"
+      tools:text="@string/done_false" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

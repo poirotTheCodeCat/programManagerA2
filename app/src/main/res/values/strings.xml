@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">Project Manager</string>
+    <string name="action_settings">Settings</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">Your Projects</string>
+    <string name="second_fragment_label">Create Project</string>
+    <string name="third_fragment_label">See Tasks</string>
+    <string name="about">About</string>
+    <string name="next">Next</string>
+    <string name="finished">Done</string>
+    <string name="done_false">Not finished\.\.\.</string>
+    <string name="done_true">All done!</string>
+    <string name="num_members">0 members</string>
+    <string name="num_of_tasks">0 of 6 tasks complete</string>
+    <string name="project_name">Project Name</string>
+    <string name="title_create_project">Create Project</string>
+    <string name="enter_project_name">Enter project name</string>
+    <string name="start_date">Start Date</string>
+    <string name="end_date">End Date</string>
+    <string name="welcome">Here are your projects</string>
+    <string name="weather">It\'s a beautiful day</string>
+    <string name="enter_person_name">Name</string>
+    <string name="enter_person_email">Email</string>
+    <string name="title_add_user">Add Users</string>
+    <string name="confirm_user">Confirm User</string>
+    <string name="no_projects">Looks like you have no projects yet, why not add one!</string>
+
+<!--    <string name="your_project_welcome">Your Projects!</string>-->
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+</resources>
