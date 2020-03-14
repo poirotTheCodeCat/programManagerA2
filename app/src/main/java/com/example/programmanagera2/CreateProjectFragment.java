@@ -20,6 +20,7 @@ import java.util.Calendar;
 public class CreateProjectFragment extends Fragment {
     private EditText dateStart;
     private EditText dateEnd;
+    private EditText projectName;
     private EditText personFirstName;
     private EditText personSecondName;
     private SeekBar personSkillLevel;
@@ -40,7 +41,9 @@ public class CreateProjectFragment extends Fragment {
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        //if variables are satisfied then show done button
         //get date text boxes
+        projectName = (EditText) view.findViewById(R.id.editText_Project_Name);
         dateStart = (EditText) view.findViewById(R.id.editText_Start_Date);
         dateEnd = (EditText) view.findViewById(R.id.editText_End_Date);
         personFirstName =(EditText)view.findViewById(R.id.editText_person_first_name);
@@ -72,6 +75,7 @@ public class CreateProjectFragment extends Fragment {
             public void onClick(View view) {
                 NavHostFragment.findNavController(CreateProjectFragment.this)
                         .navigate(R.id.action_SecondFragment_to_FirstFragment);
+
             }
         });
     }
