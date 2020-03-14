@@ -75,7 +75,10 @@ public class CreateProjectFragment extends Fragment {
             public void onClick(View view) {
                 NavHostFragment.findNavController(CreateProjectFragment.this)
                         .navigate(R.id.action_SecondFragment_to_FirstFragment);
-
+                for (String s : personList) {
+                    //split into [0] Skill, [1] First Name, [2] Last Name
+                    String[] splitStr = s.split("\\s+");
+                }
             }
         });
     }
