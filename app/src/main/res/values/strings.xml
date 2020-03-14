@@ -19,11 +19,15 @@
     <string name="end_date">End Date</string>
     <string name="welcome">Here are your projects</string>
     <string name="weather">It\'s a beautiful day</string>
-    <string name="enter_person_name">Name</string>
-    <string name="enter_person_email">Email</string>
-    <string name="title_add_user">Add Users</string>
-    <string name="confirm_user">Confirm User</string>
+    <string name="enter_person_first_name">First name</string>
+    <string name="enter_person_last_name">Last name</string>
+    <string name="title_add_person">Add People</string>
+    <string name="title_set_skill_level">Set Skill Level</string>
+    <string name="confirm_person">Add</string>
     <string name="no_projects">Looks like you have no projects yet, why not add one!</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="skill_level">0</string>
 
 <!--    <string name="your_project_welcome">Your Projects!</string>-->
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
