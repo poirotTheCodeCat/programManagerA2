@@ -41,8 +41,7 @@ public class CreateProjectFragment extends Fragment {
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        //if variables are satisfied then show done button
-        //get date text boxes
+        //get access to widgets
         projectName = (EditText) view.findViewById(R.id.editText_Project_Name);
         dateStart = (EditText) view.findViewById(R.id.editText_Start_Date);
         dateEnd = (EditText) view.findViewById(R.id.editText_End_Date);
@@ -51,8 +50,12 @@ public class CreateProjectFragment extends Fragment {
         personSkillLevel=(SeekBar)view.findViewById(R.id.seekBar_skill_level);
         Button btnPerson = (Button) view.findViewById(R.id.button_add_person);
         personListview =view.findViewById(R.id.listView_people);
+
+        //initialize needed array and adapter for view list
         personList =new ArrayList<>();
         arrayAdapter =new ArrayAdapter<String>(view.getContext(),android.R.layout.simple_list_item_1, personList);
+
+        //get date text boxes
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
@@ -73,12 +76,26 @@ public class CreateProjectFragment extends Fragment {
         view.findViewById(R.id.button_done).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                NavHostFragment.findNavController(CreateProjectFragment.this)
-                        .navigate(R.id.action_SecondFragment_to_FirstFragment);
+                ArrayList<Person> personArrayList = new ArrayList<Person>();
+                ArrayList<Task> taskArrayList = new ArrayList<Task>();
+
+                //convert
                 for (String s : personList) {
                     //split into [0] Skill, [1] First Name, [2] Last Name
                     String[] splitStr = s.split("\\s+");
+                    int skillLevel = Integer.parseInt(splitStr[0]);
+                    Person newPerson = new Person(0,splitStr[1], splitStr[2], skillLevel);
+                    personArrayList.add(newPerson);
                 }
+                //create new project
+                Project newProject = new Project(0, projectName.getText().toString(), personArrayList,
+                        taskArrayList, dateStart.getText().toString(), dateEnd.getText().toString());
+                //add new project to database
+                Project.insertProject(view.getContext(), newProject);
+
+                //go home
+                NavHostFragment.findNavController(CreateProjectFragment.this)
+                        .navigate(R.id.action_SecondFragment_to_FirstFragment);
             }
         });
     }

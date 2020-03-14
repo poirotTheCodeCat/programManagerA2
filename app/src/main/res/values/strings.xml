@@ -22,7 +22,7 @@
     <string name="title_add_person">Add People</string>
     <string name="title_set_skill_level">Set Skill Level</string>
     <string name="confirm_person">Add</string>
-    <string name="no_projects">Looks like you have no projects yet, why not add one!</string>
+    <string name="no_projects">Looks like you have no projects yet :(</string>
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
     <string name="skill_level">0</string>

@@ -33,7 +33,6 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
             super(view);
             project_name = view.findViewById(R.id.project_name);
             team = view.findViewById(R.id.project_num_of_members);
-            tasks = view.findViewById(R.id.project_num_of_tasks);
             end_date = view.findViewById(R.id.project_end_date);
         }
     }
@@ -62,8 +61,6 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
                 ++taskCompleteCount;
             }
         }
-        //display completed tasks
-        holder.tasks.setText(taskCompleteCount+" of "+project.getTasks().size()+" tasks complete");
         holder.end_date.setText(project.getEnd_date().toString());
     }
 

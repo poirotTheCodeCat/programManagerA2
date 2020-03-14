@@ -87,7 +87,7 @@ public class ProjectDataAccess {
             ", " + END_DATE + "TEXT" +");";
 
     public static final String CREATE_TASK_TABLE = "CREATE TABLE " + TASK_TABLE + " (" +
-            TASK_ID + "INTEGER PRIMARY KEY AUTOINCREMENT" +
+            TASK_ID + " INTEGER PRIMARY KEY AUTOINCREMENT" +
             ", " + PROJECT_TASK_ID + " INTEGER NOT NULL" +
             ", " + TASK_DESCRIPTION + " TEXT" +
             ", " + COMPLETE + " INTEGER" +
@@ -351,10 +351,10 @@ public class ProjectDataAccess {
         // insert new project into projects table
         ContentValues cv = new ContentValues();     // create a contentValues object with project info
         cv.put(PROJECT_NAME, project.getProject_name());
-        cv.put(START_DATE, project.getStart_date().toString());
-        cv.put(END_DATE, project.getEnd_date().toString());
+        cv.put(START_DATE, project.getStart_date());
+        cv.put(END_DATE, project.getEnd_date());
 
-        openWriteOnlyDB();
+        this.openWriteOnlyDB();
 
         long row_id = db.insert(PROJECT_TABLE, null, cv);   // insert the project into database
 
@@ -366,7 +366,45 @@ public class ProjectDataAccess {
             insertPerson(project.getTeam().get(i));
         }
 
+        int new_project_id = getLastProjectID();    // get product_id of most recent insert
+
+        insertProjectTeam(project.getTeam(), new_project_id);   // insert team into databases
         // NOTE: TASKS ARE NOT CREATED WHEN A NEW PROJECT IS CREATED
+    }
+
+    /*
+    Function: insertProjectTeam()
+    Parameters:
+    Description:
+    Returns:
+     */
+    public void insertProjectTeam(ArrayList<Person> team, int person_id)
+    {
+        openWriteOnlyDB();
+        // add each member of the team into the database using a loop
+        for(int i = 0; i<team.size(); i++)
+        {
+            ContentValues cv = new ContentValues();
+            cv.put(PERSON_ID, team.get(i).getPerson_id());
+            cv.put(TEAM_PROJECT_ID, person_id);
+
+            db.insert(TEAM_TABLE, null, cv);
+        }
+        closeDB();
+    }
+
+    private int getLastProjectID()
+    {
+        openWriteOnlyDB();
+        Cursor cursor = db.query(PROJECT_TABLE, null, null, null, null, null, null);
+        cursor.moveToLast();        // move to last element
+
+        int id = cursor.getInt(PROJECT_ID_COL);         // get id from cursor
+
+        cursor.close();     // close stuff
+        db.close();
+
+        return id;
     }
 
     /*

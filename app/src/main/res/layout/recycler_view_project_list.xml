@@ -35,24 +35,14 @@
         tools:text="@string/project_name" />
 
     <TextView
-        android:id="@+id/project_num_of_tasks"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:padding="5dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/project_name"
-        tools:text="@string/num_of_tasks" />
-
-    <TextView
         android:id="@+id/project_end_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:padding="5dp"
         android:text="TextView"
-        app:layout_constraintBaseline_toBaselineOf="@+id/project_num_of_tasks"
         app:layout_constraintEnd_toEndOf="parent"
+        tools:layout_editor_absoluteY="29dp"
         tools:text="@string/end_date" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

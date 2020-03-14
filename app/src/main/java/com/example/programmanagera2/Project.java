@@ -18,8 +18,8 @@ public class Project {
     private String project_name;
     private ArrayList<Person> team;
     private ArrayList<Task> tasks;
-    private Date start_date;
-    private Date end_date;
+    private String start_date;
+    private String end_date;
 
     public Project(int id, String name, ArrayList<Person> projectTeam, ArrayList<Task> projectTasks,  String start, String end)   // constructor for the Project Class
     {
@@ -27,15 +27,8 @@ public class Project {
         project_name = name;
         team = projectTeam;
         tasks = projectTasks;
-        try{
-        start_date = new SimpleDateFormat("dd/MM/yyyy").parse(start);
-        end_date = new SimpleDateFormat("dd/MM/yyyy").parse(end);
-        }
-        catch (Exception e)     // if there is an error reading the date then set to current date
-        {
-            start_date = new Date();
-            end_date = new Date();
-        }
+        start_date = start;
+        end_date = end;
     }
 
     // mutators
@@ -51,11 +44,11 @@ public class Project {
         this.team = team;
     }
 
-    public void setStart_date(Date start_date) {
+    public void setStart_date(String start_date) {
         this.start_date = start_date;
     }
 
-    public void setEnd_date(Date end_date) {
+    public void setEnd_date(String end_date) {
         this.end_date = end_date;
     }
 
@@ -72,11 +65,11 @@ public class Project {
         return team;
     }
 
-    public Date getStart_date() {
+    public String getStart_date() {
         return start_date;
     }
 
-    public Date getEnd_date() {
+    public String getEnd_date() {
         return end_date;
     }
 
@@ -92,5 +85,12 @@ public class Project {
     {
         ProjectDataAccess db = new ProjectDataAccess(context);
         db.insertProject(project);
+    }
+
+    public static ArrayList<Project> getAllProjects(Context context)
+    {
+        ProjectDataAccess db = new ProjectDataAccess(context);
+        ArrayList<Project> projects = db.getProjects();
+        return projects;
     }
 }

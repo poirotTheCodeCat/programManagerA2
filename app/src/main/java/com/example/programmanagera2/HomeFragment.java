@@ -13,8 +13,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
+
+import static com.example.programmanagera2.Project.*;
 
 public class HomeFragment extends Fragment {
 
@@ -51,13 +54,24 @@ public class HomeFragment extends Fragment {
             public void onClick(View view) {
                 NavHostFragment.findNavController(HomeFragment.this)
                         .navigate(R.id.action_FirstFragment_to_SecondFragment);
-//                Snackbar.make(view, "Project added", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
             }
         });
         //see if DB has an projects
-
-        //if not then display empty list text notification
+        ArrayList<Project> projects = getAllProjects(view.getContext());
+        if (projects.isEmpty()){
+            view.findViewById(R.id.textView_no_projects).setVisibility(view.VISIBLE);
+            Snackbar.make(view, "Try adding a task", Snackbar.LENGTH_LONG)
+            .setAction("Action", null).show();
+        } else {
+            //clear list before adding to list
+            projectDataList.clear();
+            projectListAdapter.notifyDataSetChanged();
+            //if there are projects then display them in the list
+            for (Project p : projects) {
+                projectDataList.add(p);
+                projectListAdapter.notifyDataSetChanged();
+            }
+        }
 
         //tasks.getAllTasks(content, projectID)
     }
