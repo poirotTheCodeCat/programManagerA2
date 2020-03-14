@@ -1,83 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".CreateProjectFragment">
 
     <Button
-        android:id="@+id/button_third"
-        android:layout_width="0dp"
+        android:id="@+id/back_button"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="160dp"
-        android:layout_marginBottom="16dp"
-        android:text="@string/finished"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <EditText
-        android:id="@+id/editText_Project_Name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:autofillHints="@string/enter_project_name"
-        android:ems="10"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/editText_Start_Date"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="8dp"
-        android:ems="10"
-        android:inputType="date"
-        app:layout_constraintEnd_toStartOf="@+id/editText_End_Date"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText_Project_Name"
-        android:autofillHints="" />
-
-    <EditText
-        android:id="@+id/editText_End_Date"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="32dp"
-        android:ems="10"
-        android:inputType="date"
-        app:layout_constraintBaseline_toBaselineOf="@+id/editText_Start_Date"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/editText_Start_Date"
-        android:autofillHints="" />
+        android:background="@color/colorAccent"
+        android:text="@string/back_button_tasks"
+        android:textColor="@color/colorWhite"
+        android:textSize="26sp" />
 
     <TextView
-        android:id="@+id/textView_Start_Date"
-        android:layout_width="wrap_content"
+        android:id="@+id/project_name_display"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/start_date"
-        app:layout_constraintBottom_toTopOf="@+id/editText_Start_Date"
-        app:layout_constraintStart_toStartOf="@+id/editText_Start_Date" />
+        android:text="@string/project_view"
+        android:textSize="26sp"
+        android:textAlignment="center"
+        />
 
     <TextView
-        android:id="@+id/textView_End_Date"
-        android:layout_width="wrap_content"
+        android:id="@+id/project_name"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/end_date"
-        app:layout_constraintBottom_toTopOf="@+id/editText_End_Date"
-        app:layout_constraintStart_toStartOf="@+id/editText_End_Date" />
+        android:textAlignment="center"
+        android:textSize="36sp"
+        />
 
-    <TextView
-        android:id="@+id/textView_Create_Project"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/enter_project_name"
-        app:layout_constraintBottom_toTopOf="@+id/editText_Project_Name"
-        app:layout_constraintEnd_toEndOf="@+id/editText_Project_Name"
-        app:layout_constraintStart_toStartOf="@+id/editText_Project_Name" />
+        android:padding="4dp"
+        android:layout_margin="2sp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/start_date"
+            android:textSize="26sp"
+            android:padding="2dp"
+            android:textAlignment="center"
+            android:layout_weight="4"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/end_date"
+            android:layout_weight="4"
+            android:textSize="26sp"
+            android:textAlignment="center"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="4dp"
+        android:layout_margin="2sp">
+
+        <TextView
+            android:id="@+id/start_date_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="26sp"
+            android:padding="2dp"
+            android:textAlignment="center"
+            android:layout_weight="4"
+            />
+        <TextView
+            android:id="@+id/end_date_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:textSize="26sp"
+            android:textAlignment="center"/>
+    </LinearLayout>
+
+        <EditText
+            android:id="@+id/task_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/task_name"
+            android:textAlignment="center"
+            android:textSize="26sp"
+            android:inputType="text"
+            android:autofillHints="@string/task_name"
+            android:layout_margin="2sp"
+            />
+
+    <Button
+        android:id="@+id/insert_task_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="2sp"
+        android:background="@color/colorAccent"
+        android:text="@string/insert_task"
+        android:textAlignment="center"
+        android:textColor="@color/colorWhite"
+        android:textSize="26sp" />
+
+    <ListView
+        android:id="@+id/task_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>

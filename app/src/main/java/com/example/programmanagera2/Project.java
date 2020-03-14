@@ -6,6 +6,8 @@ Description: This file contains all of the logic for the Project class including
  */
 package com.example.programmanagera2;
 
+import android.content.Context;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -78,4 +80,17 @@ public class Project {
         return end_date;
     }
 
+    public ArrayList<Task> getTasks() { return tasks; }
+
+    /*
+    Function: insertProject()
+    Parameters: insertProject(Context context, Project project
+    Description: Calls on a database method to insert a project into the database
+    Returns: Nothing
+     */
+    public static void insertProject(Context context, Project project)
+    {
+        ProjectDataAccess db = new ProjectDataAccess(context);
+        db.insertProject(project);
+    }
 }

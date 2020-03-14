@@ -327,12 +327,11 @@ public class ProjectDataAccess {
     Description: insets a new task as a part of a specific project into the task table and ProjectTasks table
     Returns: nothing
      */
-    public void insertTask(Task task, int project_id)
+    public void insertTask(String task_description, int project_id)
     {
         ContentValues cv = new ContentValues();     // load values of task into content value object
-        cv.put(PROJECT_TASK_ID, project_id);
-        cv.put(TASK_DESCRIPTION, task.getTask_description());
-        cv.put(COMPLETE, task.getTask_complete());
+        cv.put(TASK_DESCRIPTION, task_description);
+        cv.put(COMPLETE, 0);
 
         openWriteOnlyDB();      // open the database for writing
 

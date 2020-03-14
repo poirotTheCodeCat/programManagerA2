@@ -8,10 +8,19 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
+
 public class HomeFragment extends Fragment {
+
+    private ArrayList<Project> projectDataList = new ArrayList<Project>();
+    private RecyclerView recyclerView;
+    private ProjectListAdapter projectListAdapter;
 
     @Override
     public View onCreateView(
@@ -19,8 +28,16 @@ public class HomeFragment extends Fragment {
             Bundle savedInstanceState
     ) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
-//        return v;
+        View v = inflater.inflate(R.layout.fragment_home, container, false);
+
+        recyclerView = v.findViewById(R.id.recyclerFriendView);
+        projectListAdapter = new ProjectListAdapter(projectDataList);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(v.getContext());
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setAdapter(projectListAdapter);
+
+        return v;
     }
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
@@ -38,9 +55,10 @@ public class HomeFragment extends Fragment {
 //                        .setAction("Action", null).show();
             }
         });
+        //see if DB has an projects
 
-        //see if DB has an projects - if not then display empty list text
+        //if not then display empty list text notification
 
-        //else display recycler
+        //tasks.getAllTasks(content, projectID)
     }
 }

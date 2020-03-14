@@ -29,7 +29,7 @@
         app:layout_constraintBottom_toTopOf="@+id/fabAddProject"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewWeather"
+        app:layout_constraintTop_toBottomOf="@+id/textView_weather"
         tools:listitem="@layout/recycler_view_project_list" />
 
     <TextView
@@ -47,7 +47,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textViewWeather"
+        android:id="@+id/textView_weather"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="176dp"
@@ -69,6 +69,7 @@
         android:text="@string/no_projects"
         android:textAlignment="center"
         android:textSize="18sp"
+        android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/fabAddProject"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

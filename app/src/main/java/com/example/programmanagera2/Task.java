@@ -6,6 +6,10 @@ Description: This file contains the Task class which contains all of the logic p
  */
 package com.example.programmanagera2;
 
+import android.content.Context;
+
+import java.util.ArrayList;
+
 public class Task {
     private int task_id;
     private String task_description;
@@ -45,5 +49,11 @@ public class Task {
 
     public void setTask_id(int task_id) {
         this.task_id = task_id;
+    }
+    public static ArrayList<Task> getAllTasks(Context context, int project_id)
+    {
+        ProjectDataAccess db = new ProjectDataAccess(context);
+        ArrayList<Task> tasks = db.getProjectTasks(project_id);
+        return tasks;
     }
 }

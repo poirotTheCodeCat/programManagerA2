@@ -8,8 +8,6 @@
     <string name="about">About</string>
     <string name="next">Next</string>
     <string name="finished">Done</string>
-    <string name="done_false">Not finished\.\.\.</string>
-    <string name="done_true">All done!</string>
     <string name="num_members">0 members</string>
     <string name="num_of_tasks">0 of 6 tasks complete</string>
     <string name="project_name">Project Name</string>
@@ -28,7 +26,17 @@
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
     <string name="skill_level">0</string>
+    <string name="members"> Members</string>
+
+    <!--    <string name="your_project_welcome">Your Projects!</string>-->
+    <string name="project_view">Project</string>
 
     <!--    <string name="your_project_welcome">Your Projects!</string>-->
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="start_date_view">Start Date</string>
+    <string name="end_date_view">End Date</string>
+    <string name="task_name">Task Name</string>
+    <string name="insert_task">INSERT</string>
+    <string name="back_button_tasks">BACK</string>
+    <string name="complete_task_string">COMPLETE</string>
 </resources>

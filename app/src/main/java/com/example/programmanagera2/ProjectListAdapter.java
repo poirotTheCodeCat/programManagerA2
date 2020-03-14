@@ -13,7 +13,6 @@ package com.example.programmanagera2;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -28,14 +27,14 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
     private List<Project> projectInfoList;
 
     public class ProjectViewHolder extends RecyclerView.ViewHolder{
-        public TextView name, num_of_members, num_of_tasks, done;
+        public TextView project_name, team, tasks, end_date;
 
         public ProjectViewHolder(View view){
             super(view);
-            name = view.findViewById(R.id.name);
-            num_of_members = view.findViewById(R.id.num_of_members);
-            num_of_tasks = view.findViewById(R.id.num_of_tasks);
-            done = view.findViewById(R.id.done);
+            project_name = view.findViewById(R.id.project_name);
+            team = view.findViewById(R.id.project_num_of_members);
+            tasks = view.findViewById(R.id.project_num_of_tasks);
+            end_date = view.findViewById(R.id.project_end_date);
         }
     }
 
@@ -53,17 +52,19 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
 
     @Override
     public void onBindViewHolder(ProjectViewHolder holder, int position){
-
-        //ProjectDataAccess pda = new ProjectDataAccess(null);
-
-//        Project project = projectInfoList.get(position);
-//        holder.name.setText(project.getName());
-//        holder.num_of_members.setText(project.getEmail());
-//        holder.num_of_tasks.setText(project.getEmail());
-//        holder.done.setText(project.getEmail());
-
-        
-
+        Project project = projectInfoList.get(position);
+        holder.project_name.setText(project.getProject_name());
+        holder.team.setText(project.getTeam().size()+" Members");
+        //count number of completed tasks
+        int taskCompleteCount = 0;
+        for (Task task : project.getTasks()) {
+            if(task.getTask_complete() == 1){
+                ++taskCompleteCount;
+            }
+        }
+        //display completed tasks
+        holder.tasks.setText(taskCompleteCount+" of "+project.getTasks().size()+" tasks complete");
+        holder.end_date.setText(project.getEnd_date().toString());
     }
 
     @Override
