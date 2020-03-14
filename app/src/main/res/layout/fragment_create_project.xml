@@ -6,8 +6,23 @@
     android:layout_height="match_parent"
     tools:context=".CreateProjectFragment">
 
+    <TextView
+        android:id="@+id/textView_set_skill_level"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="165dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="182dp"
+        android:text="@string/title_set_skill_level"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.444"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText_person_first_name" />
+
     <Button
-        android:id="@+id/button_second"
+        android:id="@+id/button_done"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginBottom="32dp"
@@ -91,46 +106,46 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ListView
-        android:id="@+id/listView_Users"
+        android:id="@+id/listView_people"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/button_second"
+        app:layout_constraintBottom_toTopOf="@+id/button_done"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_Add_User" />
+        app:layout_constraintTop_toBottomOf="@+id/button_add_person" />
 
     <EditText
-        android:id="@+id/editText_Person_Name"
+        android:id="@+id/editText_person_first_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:ems="10"
-        android:hint="@string/enter_person_name"
+        android:hint="@string/enter_person_first_name"
         android:inputType="textPersonName"
         android:textAlignment="center"
-        app:layout_constraintEnd_toStartOf="@+id/editText_Person_Email"
+        app:layout_constraintEnd_toStartOf="@+id/editText_person_last_name"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_Add_User" />
 
     <EditText
-        android:id="@+id/editText_Person_Email"
+        android:id="@+id/editText_person_last_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="32dp"
         android:ems="10"
-        android:hint="@string/enter_person_email"
+        android:hint="@string/enter_person_last_name"
         android:inputType="textEmailAddress"
         android:textAlignment="center"
-        app:layout_constraintBaseline_toBaselineOf="@+id/editText_Person_Name"
+        app:layout_constraintBaseline_toBaselineOf="@+id/editText_person_first_name"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/editText_Person_Name" />
+        app:layout_constraintStart_toEndOf="@+id/editText_person_first_name" />
 
     <TextView
         android:id="@+id/textView_Add_User"
@@ -139,7 +154,7 @@
         android:layout_marginStart="165dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="182dp"
-        android:text="@string/title_add_user"
+        android:text="@string/title_add_person"
         android:textAlignment="center"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -147,17 +162,32 @@
         app:layout_constraintTop_toBottomOf="@+id/editText_Start_Date" />
 
     <Button
-        android:id="@+id/button_Add_User"
+        android:id="@+id/button_add_person"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="@string/confirm_user"
         android:background="@color/colorAccent"
-        android:textColor="@color/colorWhite"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
+        android:text="@string/confirm_person"
+        android:textColor="@color/colorWhite"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText_Person_Name" />
+        app:layout_constraintTop_toBottomOf="@+id/seekBar_skill_level" />
+
+    <SeekBar
+        android:id="@+id/seekBar_skill_level"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:max="5"
+        android:progress="0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_set_skill_level" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
