@@ -104,7 +104,6 @@ public class SeeTasksFragment extends Fragment {
                     {
 
                     }
-
                     new_task_input.setText("");
                 }
             }
