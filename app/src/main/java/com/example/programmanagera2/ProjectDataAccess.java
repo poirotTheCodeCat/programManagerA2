@@ -15,8 +15,11 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.zip.InflaterOutputStream;
 
 public class ProjectDataAccess {
+    public static final String LOG_INFO = "INFO";
+
     // Define Constants to be used in creating the Database
     public static final String PROJECT_DB = "Projects.db";     // name of database
     public static final int DB_VERSION = 1;
@@ -175,6 +178,7 @@ public class ProjectDataAccess {
     private void openReadOnlyDB()
     {
         db = dbHelper.getReadableDatabase();
+        Log.v(LOG_INFO, "Open database for reading");
     }
     /*
     Function: openWriteOnlyAccess()
@@ -185,6 +189,7 @@ public class ProjectDataAccess {
     private void openWriteOnlyDB()
     {
         db = dbHelper.getWritableDatabase();
+        Log.v(LOG_INFO, "Opened database for writing");
     }
     /*
     Function: closeDB()
@@ -197,6 +202,7 @@ public class ProjectDataAccess {
         if(db != null)
         {
             db.close();
+            Log.v(LOG_INFO, "database closed");
         }
     }
 
@@ -211,6 +217,7 @@ public class ProjectDataAccess {
         if(cursor != null)
         {
             cursor.close();
+            Log.v(LOG_INFO, "Cursor Closed");
         }
     }
 
@@ -235,6 +242,7 @@ public class ProjectDataAccess {
             Project project = new Project(project_id, cursor.getString(PROJECT_NAME_COL), team, tasks,
                     cursor.getString(START_DATE_COL), cursor.getString(END_DATE_COL));
             projectList.add(project);
+            Log.v(LOG_INFO, "Retrieved project project_id: " + Integer.toString(project.getProject_id()) + " from project table");
         }
         this.closeDB();
         return projectList;
@@ -263,6 +271,7 @@ public class ProjectDataAccess {
                     cursor.getInt(TASK_ID_COL), cursor.getString(TASK_DESCRIPTION_COL), cursor.getInt(COMPLETE_COL)
             );
             projectTasks.add(task);
+            Log.v(LOG_INFO, "retrieved task task_id: " + Integer.toString(task.getTask_id()) + " from tasks table");
         }
         this.closeDB();
         return projectTasks;
@@ -293,6 +302,7 @@ public class ProjectDataAccess {
         while(cursor.moveToNext())
         {
             projectTeam.add(retrievePerson(cursor.getInt(TEAM_PERSON_ID_COL)));
+            Log.v(LOG_INFO, "retrieved team from database for project_id: " + Integer.toString(project_id));
         }
         cursor.close();
         this.closeDB();
@@ -323,6 +333,7 @@ public class ProjectDataAccess {
         }
 
         Person person = new Person(cursor.getInt(PERSON_ID_COL), cursor.getString(FIRST_NAME_COL), cursor.getString(LAST_NAME_COL), cursor.getInt(SKILL_COL));
+        Log.v(LOG_INFO, "Loaded Person person_id: " + Integer.toString(person.getPerson_id()) + " from person table");
         this.closeDB();
         cursor.close();
         return person;
@@ -343,6 +354,7 @@ public class ProjectDataAccess {
         openWriteOnlyDB();      // open the database for writing
 
         long row_id = db.insert(TASK_TABLE, null, cv);
+        Log.v(LOG_INFO, "inserted task task_id: " + Long.toString(row_id) + " into tasks table");
 
         this.closeDB();
     }
@@ -364,6 +376,7 @@ public class ProjectDataAccess {
         this.openWriteOnlyDB();
 
         long row_id = db.insert(PROJECT_TABLE, null, cv);   // insert the project into database
+        Log.v(LOG_INFO, "Inserted project project_id: " + Long.toString(row_id) + " into project table");
 
         this.closeDB();     // close the database for writing
 
@@ -381,11 +394,11 @@ public class ProjectDataAccess {
 
     /*
     Function: insertProjectTeam()
-    Parameters:
-    Description:
-    Returns:
+    Parameters: ArrayList<Person> team, long project_id
+    Description: this method inserts a team into the database
+    Returns: nothing
      */
-    public void insertProjectTeam(ArrayList<Person> team, long person_id)
+    public void insertProjectTeam(ArrayList<Person> team, long project_id)
     {
         openWriteOnlyDB();
         // add each member of the team into the database using a loop
@@ -393,9 +406,10 @@ public class ProjectDataAccess {
         {
             ContentValues cv = new ContentValues();
             cv.put(PERSON_ID, team.get(i).getPerson_id());
-            cv.put(TEAM_PROJECT_ID, person_id);
+            cv.put(TEAM_PROJECT_ID, project_id);
 
             db.insert(TEAM_TABLE, null, cv);
+            Log.v(LOG_INFO, "Inserted team for project_id: " + project_id + " into team table");
         }
         closeDB();
     }
@@ -421,6 +435,8 @@ public class ProjectDataAccess {
 
         int rowCount = db.update(TASK_TABLE, cv, where, whereArgs);     // update the specified rows
         this.closeDB();     // close database
+
+        Log.v(LOG_INFO, "Updated task task_id: " + task_id + " in task table");
     }
 
     /*
@@ -450,6 +466,8 @@ public class ProjectDataAccess {
             cv.put(SKILL, person.getSkill_level());
 
             long row_id = db.insert(PERSON_TABLE, null, cv);    // insert person into db
+            Log.v(LOG_INFO, "Inserted Person " + person.getFirst_name() + " " + person.getLast_name() + " into the person table");
+
             this.closeDB(); // close db for writing
         }
     }
@@ -470,5 +488,6 @@ public class ProjectDataAccess {
         int row_count = db.delete(TASK_TABLE, where, whereArgs);    // Delete instance of task
 
         db.close();     // close database
+        Log.v(LOG_INFO, "deleted task with task ID " + task_id);
     }
 }

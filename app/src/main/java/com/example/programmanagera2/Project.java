@@ -77,7 +77,7 @@ public class Project {
 
     /*
     Function: insertProject()
-    Parameters: insertProject(Context context, Project project
+    Parameters: Context context, Project project
     Description: Calls on a database method to insert a project into the database
     Returns: Nothing
      */
@@ -87,6 +87,12 @@ public class Project {
         db.insertProject(project);
     }
 
+    /*
+    Function: getAllProjects()
+    Parameters: Context context
+    Description: Calls on a database method to get all projects from database
+    Returns: Nothing
+     */
     public static ArrayList<Project> getAllProjects(Context context)
     {
         ProjectDataAccess db = new ProjectDataAccess(context);
