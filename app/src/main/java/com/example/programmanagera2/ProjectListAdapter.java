@@ -53,7 +53,6 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
     public void onBindViewHolder(ProjectViewHolder holder, int position){
         Project project = projectInfoList.get(position);
         holder.project_name.setText(project.getProject_name());
-        holder.team.setText(project.getTeam().size()+" Members");
         //count number of completed tasks
         int taskCompleteCount = 0;
         for (Task task : project.getTasks()) {
@@ -61,6 +60,7 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
                 ++taskCompleteCount;
             }
         }
+        holder.team.setText(project.getTeam().size()+" Members");
         holder.end_date.setText(project.getEnd_date().toString());
     }
 

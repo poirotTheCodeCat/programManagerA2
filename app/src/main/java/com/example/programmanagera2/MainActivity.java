@@ -1,5 +1,9 @@
 package com.example.programmanagera2;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -42,7 +46,18 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == android.R.id.home) {
+        if (id == R.id.action_about) {
+//            AlertDialog dialog =new AlertDialog.Builder(.setTitle(R.string.about).setPositiveButton(R.string.okay, new DialogInterface.OnClickListener() {
+//
+//            });
+            AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+            dialog.setMessage(R.string.about_app_dialog)
+                    .setNegativeButton(R.string.okay, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            // User cancelled the dialog
+                        }
+                    });
+            dialog.show();
             return true;
         }
 

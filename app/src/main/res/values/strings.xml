@@ -16,7 +16,7 @@
     <string name="start_date">Start Date</string>
     <string name="end_date">End Date</string>
     <string name="welcome">Here are your projects</string>
-    <string name="weather">It\'s a beautiful day</string>
+    <string name="weather">%1$s %2$.1f C</string>
     <string name="enter_person_first_name">First name</string>
     <string name="enter_person_last_name">Last name</string>
     <string name="title_add_person">Add People</string>
@@ -27,6 +27,9 @@
     <string name="last_name">Last Name</string>
     <string name="skill_level">0</string>
     <string name="members"> Members</string>
+    <string name="exit_web_view_details">TAP WEATHER TO EXIT</string>
+    <string name="okay"> Okay</string>
+    <string name="about_app_dialog">The purpose of this application is to allow a user to create a list of projects with their own teams and add different tasks to these projects.</string>
 
     <!--    <string name="your_project_welcome">Your Projects!</string>-->
     <string name="project_view">Project</string>

@@ -12,6 +12,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -82,16 +83,15 @@ public class ProjectDataAccess {
     // Create Table Statements
     public static final String CREATE_PROJECT_TABLE = "CREATE TABLE " + PROJECT_TABLE + " (" +
             PROJECT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT" +
-            ", " + PROJECT_NAME + "TEXT NOT NULL" +
-            ", " + START_DATE + "TEXT" +
-            ", " + END_DATE + "TEXT" +");";
+            ", " + PROJECT_NAME + " TEXT NOT NULL" +
+            ", " + START_DATE + " TEXT" +
+            ", " + END_DATE + " TEXT" +");";
 
     public static final String CREATE_TASK_TABLE = "CREATE TABLE " + TASK_TABLE + " (" +
             TASK_ID + " INTEGER PRIMARY KEY AUTOINCREMENT" +
             ", " + PROJECT_TASK_ID + " INTEGER NOT NULL" +
             ", " + TASK_DESCRIPTION + " TEXT" +
-            ", " + COMPLETE + " INTEGER" +
-            ");";
+            ", " + COMPLETE + " INTEGER);";
 
     public static final String CREATE_PERSON_TABLE = "CREATE TABLE " + PERSON_TABLE + " (" +
             PERSON_ID + " INTEGER PRIMARY KEY AUTOINCREMENT" +
@@ -283,11 +283,18 @@ public class ProjectDataAccess {
         openReadOnlyDB();
 
         Cursor cursor = db.query(TEAM_TABLE, null, where, whereArgs, null, null, null);
+//        cursor.moveToFirst();
+
+        if(cursor == null)
+        {
+            Log.v("Database", "Cursor does not exist - accessing person");
+        }
 
         while(cursor.moveToNext())
         {
             projectTeam.add(retrievePerson(cursor.getInt(TEAM_PERSON_ID_COL)));
         }
+        cursor.close();
         this.closeDB();
         return projectTeam;
     }
@@ -307,18 +314,18 @@ public class ProjectDataAccess {
         openReadOnlyDB();
 
         Cursor cursor = db.query(PERSON_TABLE, null, where, whereArgs, null, null, null);
+//        cursor.moveToFirst();
 
-        if(cursor != null)      // check if person exists in database
+        if(cursor.getCount() == 0)
         {
-            Person person = new Person(cursor.getInt(PERSON_ID_COL), cursor.getString(FIRST_NAME_COL), cursor.getString(LAST_NAME_COL), cursor.getInt(SKILL_COL));
-            this.closeDB();
-            return person;
-        }
-        else
-        {
-            this.closeDB();
+            Log.v("Database", "Cursor does not exist - accessing person");
             return null;
         }
+
+        Person person = new Person(cursor.getInt(PERSON_ID_COL), cursor.getString(FIRST_NAME_COL), cursor.getString(LAST_NAME_COL), cursor.getInt(SKILL_COL));
+        this.closeDB();
+        cursor.close();
+        return person;
     }
 
     /*
@@ -366,7 +373,7 @@ public class ProjectDataAccess {
             insertPerson(project.getTeam().get(i));
         }
 
-        int new_project_id = getLastProjectID();    // get product_id of most recent insert
+        long new_project_id = row_id;    // get product_id of most recent insert
 
         insertProjectTeam(project.getTeam(), new_project_id);   // insert team into databases
         // NOTE: TASKS ARE NOT CREATED WHEN A NEW PROJECT IS CREATED
@@ -378,7 +385,7 @@ public class ProjectDataAccess {
     Description:
     Returns:
      */
-    public void insertProjectTeam(ArrayList<Person> team, int person_id)
+    public void insertProjectTeam(ArrayList<Person> team, long person_id)
     {
         openWriteOnlyDB();
         // add each member of the team into the database using a loop
@@ -393,19 +400,7 @@ public class ProjectDataAccess {
         closeDB();
     }
 
-    private int getLastProjectID()
-    {
-        openWriteOnlyDB();
-        Cursor cursor = db.query(PROJECT_TABLE, null, null, null, null, null, null);
-        cursor.moveToLast();        // move to last element
 
-        int id = cursor.getInt(PROJECT_ID_COL);         // get id from cursor
-
-        cursor.close();     // close stuff
-        db.close();
-
-        return id;
-    }
 
     /*
     Function: updateCompleteness()
@@ -450,7 +445,6 @@ public class ProjectDataAccess {
             openWriteOnlyDB();      // open database for writing
 
             ContentValues cv = new ContentValues();
-            cv.put(PERSON_ID, person.getPerson_id());
             cv.put(FIRST_NAME, person.getFirst_name());
             cv.put(LAST_NAME, person.getLast_name());
             cv.put(SKILL, person.getSkill_level());

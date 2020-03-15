@@ -44,7 +44,7 @@
     <fragment
         android:id="@+id/SeeTasksFragment"
         android:name="com.example.programmanagera2.SeeTasksFragment"
-        android:label="SeeTasksFragment" >
+        android:label="SeeTasksFragment">
         <action
             android:id="@+id/action_seeTasksFragment_to_HomeFragment"
             app:destination="@id/HomeFragment"
