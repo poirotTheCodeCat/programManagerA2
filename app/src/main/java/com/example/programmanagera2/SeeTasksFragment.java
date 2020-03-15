@@ -14,7 +14,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.fragment.NavHostFragment;
 
 import java.util.ArrayList;
 
@@ -41,6 +40,11 @@ public class SeeTasksFragment extends Fragment {
     private Project this_project;
     private ArrayList<Task> tasks;
     private ArrayAdapter<Task> adapter;
+    private int project_id;
+    private String list_string;
+    private String task_name;
+    private ArrayList<String> task_list_array;
+    private  ArrayAdapter<String> array_adapter;
 
     public interface tasksListener {
 
@@ -70,17 +74,26 @@ public class SeeTasksFragment extends Fragment {
 
         // TODO : find out how to pass Project from main view to this view
 
+        //initialize needed array and adapter for view list
+        task_list_array =new ArrayList<>();
+        array_adapter =new ArrayAdapter<String>(view.getContext(),android.R.layout.simple_list_item_1, task_list_array);
+
         insert_button = (Button) view.findViewById(R.id.insert_task_button);
         insert_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(new_task_input.getText().toString().isEmpty())
                 {
-                    // show message saying that cannot be empty - use toast
-
+                    Toast.makeText(v.getContext(), "Task needs a name", Toast.LENGTH_LONG).show();
                 }
                 else
                 {
+                    //display written task in list
+                    list_string = new_task_input.getText().toString();
+                    task_list_array.add(list_string);
+                    task_list_view.setAdapter(array_adapter);
+                    new_task_input.setText("");
+
                     String new_task = new_task_input.getText().toString();
                     // add the task to the database
                     ProjectDataAccess db = new ProjectDataAccess(getContext());     // call method in task object instead
@@ -103,7 +116,7 @@ public class SeeTasksFragment extends Fragment {
         Parameters: Project project
         Description: Sets all project aspects on page
         Returns: nothing
-         */
+     */
     public void updateProject(Project project)
     {
         this_project = project;     // set this project to the one selected
@@ -111,5 +124,4 @@ public class SeeTasksFragment extends Fragment {
         view_start.setText(this_project.getStart_date().toString());    // show the start date
         view_end.setText(this_project.getEnd_date().toString());        // show the end date
     }
-
 }

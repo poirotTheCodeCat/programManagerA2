@@ -83,7 +83,6 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         //get view and initiate the floating + button
-//        View v = inflater.inflate(R.layout.fragment_home, container, false);
         FloatingActionButton fab = view.findViewById(R.id.fabAddProject);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,9 +93,11 @@ public class HomeFragment extends Fragment {
         });
         //see if DB has an projects
         ArrayList<Project> projects = getAllProjects(view.getContext());
+        //if empty display prompt to add a project
         if (projects.isEmpty()){
             view.findViewById(R.id.textView_no_projects).setVisibility(view.VISIBLE);
         } else {
+            //if not empty add the list of projects to the recycler
             //clear list before adding to list
             projectDataList.clear();
             projectListAdapter.notifyDataSetChanged();
@@ -152,7 +153,7 @@ public class HomeFragment extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            Toast.makeText(context, "Loading weather...", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "Loading weather...", Toast.LENGTH_SHORT).show();
         }
 
         @Override

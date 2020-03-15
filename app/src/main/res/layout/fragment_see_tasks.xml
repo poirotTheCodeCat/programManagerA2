@@ -6,15 +6,6 @@
     android:orientation="vertical"
     tools:context=".CreateProjectFragment">
 
-    <Button
-        android:id="@+id/back_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorAccent"
-        android:text="@string/back_button_tasks"
-        android:textColor="@color/colorWhite"
-        android:textSize="26sp" />
-
     <TextView
         android:id="@+id/project_name_display"
         android:layout_width="match_parent"
