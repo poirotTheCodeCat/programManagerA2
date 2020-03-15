@@ -1,3 +1,11 @@
+/*
+File: Main Activity
+Programmers: John Stanly, Aaron Perry, Sasha Malesevic, Manthan Rami, Daniel Grew
+Date Last Modified: 2020-03-12
+Description: This class holds the main activity that started the application. There is only one activity
+in this project. This activity holds the on click functionality for the about dialog in the overflow
+menu. Fragments are used to change views.
+ */
 package com.example.programmanagera2;
 
 import android.app.AlertDialog;
@@ -13,12 +21,12 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,7 +36,10 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         ActionBar ab = getSupportActionBar();
         assert ab != null;
+        //show backbutton
         ab.setDisplayHomeAsUpEnabled(true);
+
+        Log.v("info", "Application started");
     }
 
     @Override
@@ -47,17 +58,20 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_about) {
-//            AlertDialog dialog =new AlertDialog.Builder(.setTitle(R.string.about).setPositiveButton(R.string.okay, new DialogInterface.OnClickListener() {
-//
-//            });
             AlertDialog.Builder dialog = new AlertDialog.Builder(this);
             dialog.setMessage(R.string.about_app_dialog)
                     .setNegativeButton(R.string.okay, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
-                            // User cancelled the dialog
+                            //user closed the dialog
                         }
                     });
             dialog.show();
+            return true;
+        }
+        if (id == android.R.id.home)
+        {
+            //return to home page
+            super.onBackPressed();
             return true;
         }
 

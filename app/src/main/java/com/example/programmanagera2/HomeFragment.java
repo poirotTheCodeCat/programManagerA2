@@ -1,12 +1,19 @@
+/*
+File: HomeFragment
+Programmers: John Stanly, Aaron Perry, Sasha Malesevic, Manthan Rami, Daniel Grew
+Date Last Modified: 2020-03-12
+Description: This class holds the home page fragment for the application. It will show a recycler
+that lists all projects currently existing in the database as well showing todays weather by calling
+the metaweather API. The float button at the bottom will add new projects to the screen.
+ */
+
 package com.example.programmanagera2;
 
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
@@ -39,7 +46,6 @@ import com.android.volley.toolbox.Volley;
 import static com.example.programmanagera2.Project.*;
 
 public class HomeFragment extends Fragment {
-
     private ArrayList<Project> projectDataList = new ArrayList<Project>();
     private ProjectListAdapter projectListAdapter;
     private WebView webView;
@@ -69,6 +75,7 @@ public class HomeFragment extends Fragment {
         //2. Display the widget that holds the weather
         new GetWeather(v.getContext()).execute();
 
+        Log.v("info", "Home fragment created");
         return v;
     }
 
@@ -107,12 +114,14 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(webView.getVisibility() == View.GONE) {
+                    Log.v("info", "Webview opened to \"https://www.metaweather.com/4118/\"");
                     webView.getSettings().setJavaScriptEnabled(true);
-                    webView.setVisibility(View.VISIBLE);
                     webView.loadUrl("https://www.metaweather.com/4118/");
-                    Snackbar.make(v, R.string.exit_web_view_details, Snackbar.LENGTH_LONG)
+                    webView.setVisibility(View.VISIBLE);
+                    Snackbar.make(v, R.string.exit_web_view_details, Snackbar.LENGTH_SHORT)
                             .setAction("Action", null).show();
                 } else {
+                    Log.v("info", "Webview closed");
                     webView.setVisibility(View.GONE);
                 }
             }
@@ -169,6 +178,7 @@ public class HomeFragment extends Fragment {
 
                                 String weatherStr = getString(R.string.weather, weatherData.GetWeatherState(), weatherData.GetTemp());
                                 weatherButton.setText(weatherStr);
+                                Log.v("info", "Metaweather API used: "+weatherStr);
 
                             } catch (Exception pe) {
                                 System.out.println(pe);

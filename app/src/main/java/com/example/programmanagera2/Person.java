@@ -1,8 +1,10 @@
 /*
-File:
+File: Person
 Programmers: John Stanly, Aaron Perry, Sasha Malesevic, Manthan Rami, Daniel Grew
 Date Last Modified: 2020-03-12
-Description:
+Description: This class holds the information for a person as is relates to the needs of this
+application. This class is used throughout the database files and the CreateProjectFragment class.
+It contains getters and setters for the data.
  */
 package com.example.programmanagera2;
 

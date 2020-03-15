@@ -1,6 +1,16 @@
+/*
+File: HomeFragment
+Programmers: John Stanly, Aaron Perry, Sasha Malesevic, Manthan Rami, Daniel Grew
+Date Last Modified: 2020-03-12
+Description: This class holds the fragment for creating a new project. It will take all input data
+and save it in the database for access on the home fragment. There is a listView that simply displays
+the names of all people added to the project.
+ */
+
 package com.example.programmanagera2;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +46,7 @@ public class CreateProjectFragment extends Fragment {
     ) {
         // Inflate the layout for this fragment
         View v=inflater.inflate(R.layout.fragment_create_project, container, false);
+        Log.v("info", "Create project fragment created");
         return v;
     }
 
@@ -64,7 +75,7 @@ public class CreateProjectFragment extends Fragment {
         btnPerson.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                listString= personSkillLevel.getProgress()+" "+personFirstName.getText().toString()+" "+ personSecondName.getText().toString();
+                listString="Skill Level: "+personSkillLevel.getProgress()+" Full Name: "+personFirstName.getText().toString()+" "+ personSecondName.getText().toString();
                 personList.add(listString);
                 personListview.setAdapter(arrayAdapter);
                 personFirstName.setText("");
@@ -93,6 +104,9 @@ public class CreateProjectFragment extends Fragment {
                 //add new project to database
                 Project.insertProject(view.getContext(), newProject);
 
+                //log new project created
+                Log.v("info", "User has created a new project: "+projectName);
+
                 //go home
                 NavHostFragment.findNavController(CreateProjectFragment.this)
                         .navigate(R.id.action_SecondFragment_to_FirstFragment);
@@ -100,7 +114,12 @@ public class CreateProjectFragment extends Fragment {
         });
     }
 
-    //fill date boxes with current date
+    /*
+    Function: showDate()
+    Parameters: insertProject(int year, int month, int day)
+    Description: Called to input the current date into the date edittext box
+    Returns: Nothing
+     */
     private void showDate(int year, int month, int day) {
         dateStart.setText(new StringBuilder().append(day).append("/")
                 .append(month).append("/").append(year));
@@ -108,6 +127,3 @@ public class CreateProjectFragment extends Fragment {
                 .append(month).append("/").append(year));
     }
 }
-
-//call insertProject()
-//just pass 2 variables
