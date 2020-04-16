@@ -35,6 +35,7 @@ public class CreateProjectFragment extends Fragment {
     private EditText personSecondName;
     private SeekBar personSkillLevel;
     private ListView personListview;
+    private ArrayList<String> contactsList;     // This holds the list of user contacts
     private ArrayList<String> personList;
     private  ArrayAdapter<String> arrayAdapter;
     private String listString;
@@ -63,7 +64,7 @@ public class CreateProjectFragment extends Fragment {
         personListview =view.findViewById(R.id.listView_people);
 
         //initialize needed array and adapter for view list
-        personList =new ArrayList<>();
+        personList =new ArrayList<String>();
         arrayAdapter =new ArrayAdapter<String>(view.getContext(),android.R.layout.simple_list_item_1, personList);
 
         //get date text boxes
@@ -126,4 +127,5 @@ public class CreateProjectFragment extends Fragment {
         dateEnd.setText(new StringBuilder().append(day).append("/")
                 .append(month).append("/").append(year));
     }
+
 }
