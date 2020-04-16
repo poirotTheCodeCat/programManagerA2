@@ -9,7 +9,11 @@ the metaweather API. The float button at the bottom will add new projects to the
 
 package com.example.programmanagera2;
 
+import android.appwidget.AppWidgetManager;
+import android.appwidget.AppWidgetProvider;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -93,6 +97,13 @@ public class HomeFragment extends Fragment {
         });
         //see if DB has an projects
         ArrayList<Project> projects = getAllProjects(view.getContext());
+
+        //broadcast to widget to update its contents in case of new project creation
+        int[] ids = AppWidgetManager.getInstance(getActivity().getApplication()).getAppWidgetIds
+                (new ComponentName(getActivity().getApplication(), CreateNewProjectWidget.class));
+        CreateNewProjectWidget myWidget = new CreateNewProjectWidget();
+        myWidget.onUpdate(getActivity(), AppWidgetManager.getInstance(getActivity()),ids);
+
         //if empty display prompt to add a project
         if (projects.isEmpty()){
             view.findViewById(R.id.textView_no_projects).setVisibility(view.VISIBLE);

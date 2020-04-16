@@ -99,4 +99,11 @@ public class Project {
         ArrayList<Project> projects = db.getProjects();
         return projects;
     }
+
+    public static int getProjectCount(Context context)
+    {
+        ProjectDataAccess db = new ProjectDataAccess(context);
+        ArrayList<Project> projects = db.getProjects();
+        return projects.size();
+    }
 }
