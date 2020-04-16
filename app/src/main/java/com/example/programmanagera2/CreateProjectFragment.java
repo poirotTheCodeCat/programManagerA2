@@ -9,6 +9,9 @@ the names of all people added to the project.
 
 package com.example.programmanagera2;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,6 +24,8 @@ import android.widget.ListView;
 import android.widget.SeekBar;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
@@ -36,6 +41,7 @@ public class CreateProjectFragment extends Fragment {
     private SeekBar personSkillLevel;
     private ListView personListview;
     private ArrayList<String> contactsList;     // This holds the list of user contacts
+    private Button contactButton;
     private ArrayList<String> personList;
     private  ArrayAdapter<String> arrayAdapter;
     private String listString;
@@ -61,6 +67,7 @@ public class CreateProjectFragment extends Fragment {
         personSecondName =(EditText)view.findViewById(R.id.editText_person_last_name);
         personSkillLevel=(SeekBar)view.findViewById(R.id.seekBar_skill_level);
         Button btnPerson = (Button) view.findViewById(R.id.button_add_person);
+        contactButton = view.findViewById(R.id.button_add_contact);
         personListview =view.findViewById(R.id.listView_people);
 
         //initialize needed array and adapter for view list
@@ -73,6 +80,8 @@ public class CreateProjectFragment extends Fragment {
         int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
         showDate(year, month +1, day);
+
+
         btnPerson.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
