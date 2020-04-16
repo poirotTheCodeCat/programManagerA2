@@ -42,4 +42,5 @@
     <string name="insert_task">INSERT</string>
     <string name="back_button_tasks">BACK</string>
     <string name="complete_task_string">COMPLETE</string>
+    <string name="add_contact">Add \n Contact</string>
 </resources>
