@@ -29,11 +29,6 @@
     <string name="members"> Members</string>
     <string name="exit_web_view_details">TAP WEATHER TO EXIT</string>
     <string name="okay"> Okay</string>
-    <string name="youve_got">You\'ve got</string>
-    <string name="zero">0</string>
-    <string name="got_projects">projects!</string>
-    <string name="got_no_projects">no projects:(</string>
-    <string name="new_project">Add</string>
     <string name="about_app_dialog">The purpose of this application is to allow a user to create a list of projects with their own teams and add different tasks to these projects.</string>
 
     <!--    <string name="your_project_welcome">Your Projects!</string>-->
@@ -47,6 +42,7 @@
     <string name="insert_task">INSERT</string>
     <string name="back_button_tasks">BACK</string>
     <string name="complete_task_string">COMPLETE</string>
+    <string name="add_contact">Add \n Contact</string>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
 </resources>
