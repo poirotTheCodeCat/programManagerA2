@@ -9,11 +9,21 @@ the names of all people added to the project.
 
 package com.example.programmanagera2;
 
+import android.Manifest;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.ContentResolver;
+import android.content.DialogInterface;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,6 +31,7 @@ import android.widget.ListView;
 import android.widget.SeekBar;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
@@ -38,6 +49,14 @@ public class CreateProjectFragment extends Fragment {
     private ArrayList<String> personList;
     private  ArrayAdapter<String> arrayAdapter;
     private String listString;
+    private boolean contactsPermission;
+
+    private ArrayList<String> contacts;
+    private Button contactsButton;
+
+    Uri CONTENT_URI = ContactsContract.Contacts.CONTENT_URI;
+    String ID = ContactsContract.Contacts._ID;
+    String DISPLAY_NAME = ContactsContract.Contacts.DISPLAY_NAME;
 
     @Override
     public View onCreateView(
@@ -62,9 +81,12 @@ public class CreateProjectFragment extends Fragment {
         Button btnPerson = (Button) view.findViewById(R.id.button_add_person);
         personListview =view.findViewById(R.id.listView_people);
 
+        contactsButton = view.findViewById(R.id.button_add_contact);    // access the contacts button
+
         //initialize needed array and adapter for view list
         personList =new ArrayList<>();
         arrayAdapter =new ArrayAdapter<String>(view.getContext(),android.R.layout.simple_list_item_1, personList);
+        contacts = new ArrayList<>();
 
         //get date text boxes
         Calendar calendar = Calendar.getInstance();
@@ -72,6 +94,18 @@ public class CreateProjectFragment extends Fragment {
         int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
         showDate(year, month +1, day);
+
+        if(checkPermission())   // check if the user has granted reading contact permission
+        {
+            try{
+                getContacts();
+                contactsPermission = true;
+            }
+            catch (Exception e){
+                Log.v("error", "Error loading contacts from phone");
+            }
+        }
+
         btnPerson.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -81,6 +115,57 @@ public class CreateProjectFragment extends Fragment {
                 personFirstName.setText("");
                 personSecondName.setText("");
                 personSkillLevel.setProgress(0);
+            }
+        });
+
+        // Set up the on click listener for the Add Contacts Button
+        contactsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(contactsPermission)
+                {
+                    ArrayAdapter<String> itemsAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, contacts);
+                    ListView contactListView = new ListView(getContext());
+                    contactListView.setAdapter(itemsAdapter);
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext())
+                            .setCancelable(true)
+                            .setMessage("Contacts")
+                            .setView(contactListView);
+
+                    final AlertDialog dialog = builder.create();
+
+                    contactListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            if(contacts.get(position).split(" ").length > 1)
+                            {
+                                personFirstName.setText(contacts.get(position).split(" ")[0]);
+                                personSecondName.setText(contacts.get(position).split(" ")[1]);
+                            }
+                            else
+                            {
+                                personFirstName.setText(contacts.get(position));
+                            }
+                            dialog.dismiss();
+                        }
+                    });
+
+                    dialog.show();
+
+                }
+                else
+                {
+                    new AlertDialog.Builder(getContext())
+                    .setCancelable(true)
+                            .setMessage("This app does not have permission to access your Contact Information \n to activate use, go to settings>>Permissions")
+                            .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            }).show();
+                }
             }
         });
 
@@ -94,8 +179,8 @@ public class CreateProjectFragment extends Fragment {
                 for (String s : personList) {
                     //split into [0] Skill, [1] First Name, [2] Last Name
                     String[] splitStr = s.split("\\s+");
-                    int skillLevel = Integer.parseInt(splitStr[0]);
-                    Person newPerson = new Person(0,splitStr[1], splitStr[2], skillLevel);
+                    int skillLevel = Integer.parseInt(splitStr[2]);
+                    Person newPerson = new Person(0,splitStr[5], splitStr[6], skillLevel);
                     personArrayList.add(newPerson);
                 }
                 //create new project
@@ -125,5 +210,43 @@ public class CreateProjectFragment extends Fragment {
                 .append(month).append("/").append(year));
         dateEnd.setText(new StringBuilder().append(day).append("/")
                 .append(month).append("/").append(year));
+    }
+
+    /*
+    Function: getContacts()
+    Parameters: none
+    Description: Gets all of the contacts from the phones contacts and fills in local variable
+    Returns: nothing
+     */
+    private void getContacts()
+    {
+        ContentResolver contentResolver = requireActivity().getContentResolver();
+        Cursor cursor = contentResolver.query(CONTENT_URI, null, null, null, null);
+        if (cursor.getCount() > 0)
+        {
+            while(cursor.moveToNext())
+            {
+                contacts.add(cursor.getString(cursor.getColumnIndex(DISPLAY_NAME)));
+            }
+        }
+        Log.v("info", "accessed contacts from data provider");
+    }
+
+    /*
+    Function: checkPermission()
+    Parameters: None
+    Description: Checks if the user has allowed the user to access contacts
+    Returns: A boolean value - true if permission granted, else false
+     */
+    private boolean checkPermission()
+    {
+        if(ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
     }
 }
