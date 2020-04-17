@@ -1,3 +1,14 @@
+/*
+File: CreateNewProjectWidget
+Programmers: John Stanly, Aaron Perry, Sasha Malesevic, Manthan Rami, Daniel Grew
+Date Last Modified: 2020-04-17
+Description: This class holds the required code for widget setup and update. On update the widget
+will query the DB for any change in number of current projects. Additionally, this class initializes
+the on click listeners for clicking the number of projects and for clicking the add new button, both
+will open the app main page. This is a generated class from Android Studio with small additions of
+custom functionality.
+ */
+
 package com.example.programmanagera2;
 
 import android.app.PendingIntent;
@@ -12,7 +23,7 @@ import java.util.ArrayList;
 import static com.example.programmanagera2.Project.getAllProjects;
 import static com.example.programmanagera2.Project.getProjectCount;
 
-/**
+/*
  * Implementation of App Widget functionality.
  */
 public class CreateNewProjectWidget extends AppWidgetProvider {
@@ -20,6 +31,14 @@ public class CreateNewProjectWidget extends AppWidgetProvider {
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
     }
+
+    /*
+    Function: onUpdate()
+    Parameters: (Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds)
+    Description: Called when widget is updated. Default class with added functionality to query
+    the DB for number of projects increase and initialize button listeners.
+    Returns: Nothing
+     */
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
@@ -44,7 +63,7 @@ public class CreateNewProjectWidget extends AppWidgetProvider {
                     R.layout.create_new_project_widget);
             views.setOnClickPendingIntent(R.id.appwidget_count, pendingIntent);
 
-            //add new button
+            //initialize add new button listener
             Intent intent2 = new Intent(context, MainActivity.class);
             PendingIntent pendingIntent2 = PendingIntent.getActivity(context,
                     0, intent, 0);
@@ -64,7 +83,7 @@ public class CreateNewProjectWidget extends AppWidgetProvider {
             views.setTextViewText(R.id.button_for_text2, responseText);
             views.setTextViewText(R.id.appwidget_count, String.valueOf(projectCount));
 
-            // Tell the AppWidgetManager to perform an update on the current app widget
+            //get app widget manager to update the current widget
             appWidgetManager.updateAppWidget(appWidgetId, views);
         }
     }
