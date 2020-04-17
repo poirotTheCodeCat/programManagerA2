@@ -45,4 +45,10 @@
     <string name="add_contact">Add \n Contact</string>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
+    <string name="youve_got">You\'ve Got</string>
+    <string name="got_projects">projects!</string>
+    <string name="zero">0</string>
+    <string name="got_no_projects">no projects:</string>
+    <string name="new_project">Add</string>
+
 </resources>
