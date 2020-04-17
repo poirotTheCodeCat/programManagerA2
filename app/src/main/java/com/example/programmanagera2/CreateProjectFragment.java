@@ -192,6 +192,15 @@ public class CreateProjectFragment extends Fragment {
                 //log new project created
                 Log.v("info", "User has created a new project: "+projectName);
 
+                new AlertDialog.Builder(getContext())
+                        .setCancelable(true)
+                        .setMessage("Project created!! Good luck!!")
+                        .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        }).show();
                 //go home
                 NavHostFragment.findNavController(CreateProjectFragment.this)
                         .navigate(R.id.action_SecondFragment_to_FirstFragment);
