@@ -51,6 +51,7 @@ public class CreateNewProjectWidget extends AppWidgetProvider {
 
             views.setOnClickPendingIntent(R.id.appwidget_button, pendingIntent2);
 
+            //update values on widget based on number of projects in database
             int projectCount = Project.getProjectCount(context);
 
             String responseText;

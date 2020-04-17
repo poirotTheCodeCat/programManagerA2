@@ -8,31 +8,44 @@ menu. Fragments are used to change views.
  */
 package com.example.programmanagera2;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.gun0912.tedpermission.PermissionListener;
+import com.gun0912.tedpermission.TedPermission;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+import java.util.List;
+
+public class MainActivity extends AppCompatActivity
+{
+    private int storagePermission=1;
+    private static int session=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
-
+        askForPermission();//ask for permission
         setSupportActionBar(toolbar);
         ActionBar ab = getSupportActionBar();
         assert ab != null;
@@ -77,5 +90,17 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    public void askForPermission()
+    {
+        PermissionListener permissionListener=new PermissionListener() {
+            @Override
+            public void onPermissionGranted() { Toast.makeText(MainActivity.this,"Permission Granted!",Toast.LENGTH_SHORT).show(); }
+            @Override
+            public void onPermissionDenied(List<String> deniedPermissions) { Toast.makeText(MainActivity.this,"Permission Denied!",Toast.LENGTH_SHORT).show(); }
+        };
+        TedPermission.with(MainActivity.this).setPermissionListener(permissionListener).setPermissions(Manifest.permission.READ_CONTACTS,Manifest.permission.WRITE_EXTERNAL_STORAGE).check();
     }
 }
