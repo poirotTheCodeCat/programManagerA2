@@ -11,9 +11,15 @@ package com.example.programmanagera2;
 
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -54,6 +60,9 @@ public class HomeFragment extends Fragment {
     private ProjectListAdapter projectListAdapter;
     private WebView webView;
     private Button weatherButton;
+    private WifiManager wifiManager;
+    private Context context;
+    private String wifiMsg;
 
     @Override
     public View onCreateView(
@@ -62,6 +71,7 @@ public class HomeFragment extends Fragment {
     ) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_home, container, false);
+        context = v.getContext();
 
         weatherButton = v.findViewById(R.id.button_weather);
         RecyclerView recyclerView = v.findViewById(R.id.recyclerFriendView);
@@ -72,12 +82,17 @@ public class HomeFragment extends Fragment {
         recyclerView.setAdapter(projectListAdapter);
 
         // Web view and instance of new browser.  Allows web view to browse to different locations without exiting the app
-        webView = (WebView) v.findViewById(R.id.webView_weather);
+        webView = v.findViewById(R.id.webView_weather);
 
-        //begin async tasks chain
+        // Initializes the WifiManager
+        wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+        SetWifiMsg();
+
+        //begin async task
         //1. get weather details from API
         //2. Display the widget that holds the weather
-        new GetWeather(v.getContext()).execute();
+        new GetWeather(context).execute();
+
 
         Log.v("info", "Home fragment created");
         return v;
@@ -140,6 +155,62 @@ public class HomeFragment extends Fragment {
         });
     }
 
+    // Register the broadcast receiver
+    // Note: As of API 29 this can no longer be done in the manifest
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        try{
+            IntentFilter intentFilter = new IntentFilter(WifiManager.WIFI_STATE_CHANGED_ACTION);
+            getActivity().registerReceiver(wifiStateReceiver, intentFilter);
+        }
+        catch(Exception e) {
+            Log.v("exception", e.getMessage());
+        }
+
+    }
+
+    // Unregister the broadcast receiver when not in the app
+    @Override
+    public void onPause() {
+        super.onPause();
+        try{
+            getActivity().unregisterReceiver(wifiStateReceiver);
+        }
+        catch(Exception e) {
+            Log.v("exception", e.getMessage());
+        }
+    }
+
+    // Receives broadcasts when the Wi-Fi is toggled and calls the SetWifiMsg method to notify the user
+    // appropriately. Requires the ACCESS_WIFI_STATE permission in the Manifest.
+    private BroadcastReceiver wifiStateReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            SetWifiMsg();
+        }
+    };
+
+    /*
+    Function: SetWifiMsg()
+    Parameters: None
+    Description: This method gets the current state of the Wi-Fi to notify the user if it is disabled should they
+                 want to use it for displaying the weather details / web view. It is also useful for users who did not
+                 realize their Wi-Fi was off and could potentially be using cellular data.
+    Returns: None
+     */
+    private void SetWifiMsg() {
+        String s = weatherButton.getText().toString();
+        if (wifiManager.getWifiState() == wifiManager.WIFI_STATE_DISABLED) {
+            wifiMsg = getString(R.string.wifi_not_enabled);
+        } else {
+            wifiMsg = "";
+            s = s.replace(getString(R.string.wifi_not_enabled), wifiMsg);
+        }
+        weatherButton.setText(s + wifiMsg);
+    }
+
     //Uses the WebView as a web browser
     private class MyBrowser extends WebViewClient {
         @Override
@@ -189,7 +260,7 @@ public class HomeFragment extends Fragment {
                                 weatherData.SetTemp(Double.parseDouble(weatherJo.getString("the_temp")));
 
                                 String weatherStr = getString(R.string.weather, weatherData.GetWeatherState(), weatherData.GetTemp());
-                                weatherButton.setText(weatherStr);
+                                weatherButton.setText(weatherStr + wifiMsg);
                                 Log.v("info", "Metaweather API used: "+weatherStr);
 
                             } catch (Exception pe) {
@@ -200,6 +271,7 @@ public class HomeFragment extends Fragment {
                     }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
+                    weatherButton.setText(wifiMsg);
                     Toast.makeText(context,"Error getting weather!",Toast.LENGTH_SHORT).show();
                 }
             });
@@ -213,37 +285,8 @@ public class HomeFragment extends Fragment {
 
         @Override
         protected void onPostExecute(Void result) {
-            new ShowWeather(context).execute();
-            // Add the chained async task
+            weatherButton.setVisibility(View.VISIBLE);
         }
     }
 
-    //CLASS   : ShowWeather
-    //PURPOSE : Task to make button visible immediately after weather data has been loaded.
-    class ShowWeather extends AsyncTask<Void, Void, Void> {
-        private Context context;
-
-        // This was required to get the correct context when creating a RequestQueue
-        public ShowWeather(Context context) {
-            this.context = context;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            Toast.makeText(context, "Loading weather details...", Toast.LENGTH_SHORT).show();
-        }
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            try {
-//                Button btn = getView().findViewById(R.id.button_weather);
-                weatherButton.setVisibility(View.VISIBLE);
-                return null;
-            }
-            catch (Exception e) {
-                return null;
-            }
-        }
-    }
 }

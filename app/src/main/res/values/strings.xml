@@ -17,6 +17,7 @@
     <string name="end_date">End Date</string>
     <string name="welcome">Here are your projects</string>
     <string name="weather">%1$s %2$.1f C</string>
+    <string name="wifi_not_enabled">\nWi-Fi not enabled</string>
     <string name="enter_person_first_name">First name</string>
     <string name="enter_person_last_name">Last name</string>
     <string name="title_add_person">Add People</string>
