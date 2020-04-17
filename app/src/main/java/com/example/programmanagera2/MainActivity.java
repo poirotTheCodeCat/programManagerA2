@@ -36,7 +36,8 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         ActionBar ab = getSupportActionBar();
         assert ab != null;
-        //show backbutton
+
+        //show back button
         ab.setDisplayHomeAsUpEnabled(true);
 
         Log.v("info", "Application started");

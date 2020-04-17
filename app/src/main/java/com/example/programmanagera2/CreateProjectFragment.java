@@ -94,8 +94,8 @@ public class CreateProjectFragment extends Fragment {
                 for (String s : personList) {
                     //split into [0] Skill, [1] First Name, [2] Last Name
                     String[] splitStr = s.split("\\s+");
-                    int skillLevel = Integer.parseInt(splitStr[0]);
-                    Person newPerson = new Person(0,splitStr[1], splitStr[2], skillLevel);
+                    int skillLevel = Integer.parseInt(splitStr[2]);
+                    Person newPerson = new Person(0,splitStr[5], splitStr[6], skillLevel);
                     personArrayList.add(newPerson);
                 }
                 //create new project
