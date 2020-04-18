@@ -93,7 +93,6 @@ public class HomeFragment extends Fragment {
         //2. Display the widget that holds the weather
         new GetWeather(context).execute();
 
-
         Log.v("info", "Home fragment created");
         return v;
     }
@@ -118,6 +117,7 @@ public class HomeFragment extends Fragment {
                 (new ComponentName(getActivity().getApplication(), CreateNewProjectWidget.class));
         CreateNewProjectWidget myWidget = new CreateNewProjectWidget();
         myWidget.onUpdate(getActivity(), AppWidgetManager.getInstance(getActivity()),ids);
+        Log.v("info", "Broadcast to update widget");
 
         //if empty display prompt to add a project
         if (projects.isEmpty()){

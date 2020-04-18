@@ -16,6 +16,7 @@ import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.widget.RemoteViews;
 
 import java.util.ArrayList;
@@ -84,6 +85,7 @@ public class CreateNewProjectWidget extends AppWidgetProvider {
             views.setTextViewText(R.id.appwidget_count, String.valueOf(projectCount));
 
             //get app widget manager to update the current widget
+            Log.v("info", "Widget updated with " + projectCount + " " + responseText);
             appWidgetManager.updateAppWidget(appWidgetId, views);
         }
     }
@@ -91,11 +93,13 @@ public class CreateNewProjectWidget extends AppWidgetProvider {
     @Override
     public void onEnabled(Context context) {
         // Enter relevant functionality for when the first widget is created
+        Log.v("info", "Widget enabled");
     }
 
     @Override
     public void onDisabled(Context context) {
         // Enter relevant functionality for when the last widget is disabled
+        Log.v("info", "Widget disabled");
     }
 }
 
